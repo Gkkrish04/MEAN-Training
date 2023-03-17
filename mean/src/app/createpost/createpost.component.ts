@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreatepostComponent implements OnInit {
 
+  enteredValue = '';
   newPost = 'NO CONTENT!';
 
   constructor() { }
@@ -14,9 +15,7 @@ export class CreatepostComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onAddPost(inputVal: HTMLTextAreaElement){
-    console.log(inputVal);
-    console.dir(inputVal);
-    this.newPost = inputVal.value;
+  onAddPost(){
+    this.newPost = this.enteredValue;
   }
 }
