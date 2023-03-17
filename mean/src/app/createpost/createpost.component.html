@@ -1,6 +1,6 @@
 
 <div style="display: flex; flex-direction: column; align-items: flex-start;">
-    <textarea name="" id="" cols="30" rows="6"></textarea>
+    <textarea cols="30" rows="6" [value]="newPost"></textarea>
     <button (click)="onAddPost()">save post</button>
     <p>{{newPost}}</p>
 </div>

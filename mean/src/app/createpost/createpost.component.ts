@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreatepostComponent implements OnInit {
 
-  newPost = '';
+  newPost = 'NO CONTENT!';
 
   constructor() { }
 
