@@ -14,7 +14,9 @@ export class CreatepostComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onAddPost(){
-    this.newPost = 'This user post';
+  onAddPost(inputVal: HTMLTextAreaElement){
+    console.log(inputVal);
+    console.dir(inputVal);
+    this.newPost = inputVal.value;
   }
 }
