@@ -1,6 +1,8 @@
 <div class="base">
   <div class="container">
-    <app-header></app-header>
-    <router-outlet></router-outlet>
+    <!-- <app-header></app-header> -->
+    <!-- <router-outlet></router-outlet> -->
+    <app-createpost (postCreate)="onPostAdded($event)"></app-createpost>
+    <app-postlist [posts]="storedPosts"></app-postlist>
   </div>
 </div>

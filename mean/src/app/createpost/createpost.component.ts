@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-createpost',
@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreatepostComponent implements OnInit {
 
-  enteredValue = '';
-  newPost = 'NO CONTENT!';
+  enteredTitle = '';
+  enteredContent = '';
+  
+  @Output() postCreate = new EventEmitter();
 
   constructor() { }
 
@@ -16,6 +18,11 @@ export class CreatepostComponent implements OnInit {
   }
 
   onAddPost(){
-    this.newPost = this.enteredValue;
+    const post = {title: this.enteredTitle, content: this.enteredContent};
+    console.log('child', post);
+    this.postCreate.emit(post);
   }
+
+
+  //using event emitter to transfer the data to other components, using emit to passing the post as an argument of emit() then we using @output decorater for passing the data to outside of the component.
 }
