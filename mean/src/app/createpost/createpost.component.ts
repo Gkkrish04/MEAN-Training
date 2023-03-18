@@ -10,7 +10,7 @@ export class CreatepostComponent implements OnInit {
   enteredTitle = '';
   enteredContent = '';
   
-  @Output() postCreate = new EventEmitter();
+  @Output() postCreate = new EventEmitter<any>();
 
   constructor() { }
 
@@ -19,7 +19,6 @@ export class CreatepostComponent implements OnInit {
 
   onAddPost(){
     const post = {title: this.enteredTitle, content: this.enteredContent};
-    console.log('child', post);
     this.postCreate.emit(post);
   }
 

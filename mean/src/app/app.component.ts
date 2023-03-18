@@ -6,10 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  storedPosts:any;
+  storedPosts:any[] = [];
 
-
-  onPostAdded(post:any){
+  onPostAdded(post: any){
     this.storedPosts.push(post);
   }
 
