@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Post } from '../model/post.model';
+import { CommonService } from '../service/common.service';
 
 @Component({
   selector: 'app-createpost',
@@ -8,13 +8,8 @@ import { Post } from '../model/post.model';
   styleUrls: ['./createpost.component.scss']
 })
 export class CreatepostComponent implements OnInit {
-
-  enteredTitle = '';
-  enteredContent = '';
   
-  @Output() postCreate = new EventEmitter<Post>();
-
-  constructor() { }
+  constructor(public commonService: CommonService) { }
 
   ngOnInit(): void {
   }
@@ -23,9 +18,8 @@ export class CreatepostComponent implements OnInit {
     if(form.invalid){
       return;
     }
-    const post: Post = {title: form.value.title, content: form.value.content};
-    this.postCreate.emit(post);
+    this.commonService.addPost(form.value.title, form.value.content);
   }
 
-  //using form tag for get data from all input field and also we do validation for input fields, we using the local referance tag to set default angular ngForm element, this tag give as entire html form element. this ngForm object give as all the parameters, we pass this local referance tag element to addpost() parameter.
+  //now we using service to get and list the data form input, if we using multiple components the data transfer is difficult to handle with the help of event emitter. so we inject the service file to angular. we using this service file to get and add the post data from input this method is called dependency injection.
 }
