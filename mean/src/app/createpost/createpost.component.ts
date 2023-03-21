@@ -19,7 +19,6 @@ export class CreatepostComponent implements OnInit {
       return;
     }
     this.commonService.addPost(form.value.title, form.value.content);
+    form.resetForm();
   }
-
-  //now we using service to get and list the data form input, if we using multiple components the data transfer is difficult to handle with the help of event emitter. so we inject the service file to angular. we using this service file to get and add the post data from input this method is called dependency injection.
 }
