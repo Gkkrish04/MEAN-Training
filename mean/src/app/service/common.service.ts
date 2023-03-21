@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Post } from '../model/post.model';
@@ -10,10 +11,15 @@ export class CommonService {
   private posts: Post[] = [];
   private postUpdate = new Subject<Post[]>();
 
-  constructor() { }
+  constructor(private http : HttpClient) { }
+
+  //use http request for get posts from server using httpclientmodule for http request
 
   getPost(){
-    return [...this.posts];
+    this.http.get<any>('http://localhost:3000/api/posts').subscribe((response)=>{
+      this.posts = response.posts;
+      this.postUpdate.next([...this.posts]);
+    })
   }
 
   getPostUpdateListner(){
@@ -21,7 +27,7 @@ export class CommonService {
   }
 
   addPost(title: string, content: string){
-    const post: Post = {title: title, content: content};
+    const post: Post = {id: null, title: title, content: content};
     this.posts.push(post);
     this.postUpdate.next([...this.posts]);
   }

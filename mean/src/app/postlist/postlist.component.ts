@@ -16,8 +16,7 @@ export class PostlistComponent implements OnInit, OnDestroy {
   constructor(public commonService:CommonService ) { }
 
   ngOnInit(): void {
-    this.posts = this.commonService.getPost();
-    //subscribe have three arguments 1: function of data emmited 2: error of emmited 3: when observable completed
+    this.commonService.getPost();
     this.postsSub = this.commonService.getPostUpdateListner().subscribe((posts)=>{
       this.posts = posts;
     });
