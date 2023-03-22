@@ -16,10 +16,18 @@ export class PostlistComponent implements OnInit, OnDestroy {
   constructor(public commonService:CommonService ) { }
 
   ngOnInit(): void {
+    this.getPost();
+  }
+
+  getPost(){
     this.commonService.getPost();
     this.postsSub = this.commonService.getPostUpdateListner().subscribe((posts)=>{
       this.posts = posts;
-    });
+    })
+  }
+
+  onDelete(postId:any){
+    this.commonService.deletePost(postId);
   }
 
   ngOnDestroy(){

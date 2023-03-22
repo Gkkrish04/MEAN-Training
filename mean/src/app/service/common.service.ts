@@ -46,4 +46,12 @@ export class CommonService {
         this.postUpdate.next([...this.posts]);
       });
   }
+
+  deletePost(postId:any){
+    this.http.delete<{ message: string }>('http://localhost:3000/api/posts/' + postId).subscribe((response) =>{
+      console.log(response.message);
+      const updatePost = this.posts.filter(post=> post.id !== postId);
+      this.postUpdate.next([...updatePost]);
+    })
+  }
 }
