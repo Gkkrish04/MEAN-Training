@@ -2,35 +2,48 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Post } from '../model/post.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CommonService {
-
   private posts: Post[] = [];
   private postUpdate = new Subject<Post[]>();
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getPost(){
-    this.http.get<any>('http://localhost:3000/api/posts').subscribe((response)=>{
-      this.posts = response.data;
-      this.postUpdate.next([...this.posts]);
-    })
+  //here we using rxjs map operator to rearrange the response with the help of pipe
+  getPost() {
+    this.http.get<{message: string, data:any}>('http://localhost:3000/api/posts')
+    .pipe(map((response) => {
+      return response.data.map((dataVal:any) =>{
+        const post = {
+          title: dataVal.title,
+          content: dataVal.content,
+          id: dataVal._id,
+        }
+        return post;
+      })
+    }))
+    .subscribe((response) => {
+        this.posts = response;
+        this.postUpdate.next([...this.posts]);
+      });
   }
 
-  getPostUpdateListner(){
+  getPostUpdateListner() {
     return this.postUpdate.asObservable();
   }
 
-  addPost(title: string, content: string){
-    const post: Post = {id: null, title: title, content: content};
+  addPost(title: string, content: string) {
+    const post: Post = { id: null, title: title, content: content };
     //send the post request
-    this.http.post<{message: string}>('http://localhost:3000/api/posts', post).subscribe(response => {
-      console.log(response.message);
-      this.posts.push(post);
-      this.postUpdate.next([...this.posts]);
-    });
+    this.http.post<{ message: string }>('http://localhost:3000/api/posts', post)
+    .subscribe((response) => {
+        console.log(response.message);
+        this.posts.push(post);
+        this.postUpdate.next([...this.posts]);
+      });
   }
 }
