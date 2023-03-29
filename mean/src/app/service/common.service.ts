@@ -48,6 +48,7 @@ export class CommonService {
         post.id = id;
         this.posts.push(post);
         this.postUpdate.next([...this.posts]);
+        this.router.navigate(['postList']);
       });
   }
 //here we get the single post data from local post list but now we get that single selected post from database.

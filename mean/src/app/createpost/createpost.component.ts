@@ -13,6 +13,7 @@ export class CreatepostComponent implements OnInit {
   post: any;
   private mode = 'create';
   private postId: any;
+  isLoading = false;
   
   constructor(public commonService: CommonService, public activeroute: ActivatedRoute) { }
 
@@ -22,7 +23,9 @@ export class CreatepostComponent implements OnInit {
       if(paramMap.has('postId')){
         this.mode = 'edit';
         this.postId = paramMap.get('postId');
+        this.isLoading = true;
         this.commonService.getSinglePost(this.postId).subscribe((postData)=>{
+          this.isLoading = false;
           this.post = {
             id: postData._id,
             title: postData.title,
@@ -40,7 +43,7 @@ export class CreatepostComponent implements OnInit {
     if(form.invalid){
       return;
     }
-
+    this.isLoading = true;
     if(this.mode == 'create'){
       this.commonService.addPost(form.value.title, form.value.content);
       form.resetForm();

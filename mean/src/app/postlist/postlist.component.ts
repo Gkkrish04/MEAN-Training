@@ -9,6 +9,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./postlist.component.scss']
 })
 export class PostlistComponent implements OnInit, OnDestroy {
+
+  isLoading = false;
+
   
   posts:Post[] = [];
   private postsSub: Subscription | undefined;
@@ -20,9 +23,11 @@ export class PostlistComponent implements OnInit, OnDestroy {
   }
 
   getPost(){
+    this.isLoading = true;
     this.commonService.getPost();
     this.postsSub = this.commonService.getPostUpdateListner().subscribe((posts)=>{
       this.posts = posts;
+      this.isLoading = false;
     })
   }
 

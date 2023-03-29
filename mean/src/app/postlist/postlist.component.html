@@ -1,4 +1,5 @@
-<div class="container">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div *ngIf="!isLoading" class="container">
     <mat-accordion *ngIf="posts.length > 0">
         <mat-expansion-panel *ngFor="let item of posts">
             <mat-expansion-panel-header>{{item.title}}</mat-expansion-panel-header>
