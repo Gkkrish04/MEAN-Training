@@ -16,16 +16,19 @@ export class CreatepostComponent implements OnInit {
   
   constructor(public commonService: CommonService, public activeroute: ActivatedRoute) { }
 
-  //we using the activated route to find this form used by which purpose like post create or post edit, this activated route will give as an routing object.
-
   ngOnInit(): void {
-    //we using paramMap it's basically observable, we using this paramMap to find the statis of routing url and if url has postId we get the data from routing url.
 
     this.activeroute.paramMap.subscribe((paramMap: ParamMap)=>{
       if(paramMap.has('postId')){
         this.mode = 'edit';
         this.postId = paramMap.get('postId');
-        this.post = this.commonService.getSinglePost(this.postId);
+        this.commonService.getSinglePost(this.postId).subscribe((postData)=>{
+          this.post = {
+            id: postData._id,
+            title: postData.title,
+            content: postData.content,
+           }
+        })
       }else{
         this.mode = 'create';
         this.postId = null;

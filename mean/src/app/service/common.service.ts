@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class CommonService {
+
+  baseUrl:any = 'http://localhost:3000/api/';
+
   private posts: Post[] = [];
   private postUpdate = new Subject<Post[]>();
 
@@ -47,15 +50,20 @@ export class CommonService {
         this.postUpdate.next([...this.posts]);
       });
   }
-
+//here we get the single post data from local post list but now we get that single selected post from database.
   getSinglePost(id:string){
-    return {... this.posts.find(p => p.id === id)};
+    return this.http.get<{_id:any, title: string, content: string}>(this.baseUrl + 'posts/' + id);
   }
 
   updatePost(id:any, title: string, content: string){
     const post: Post = {id:id, title:title, content:content};
     this.http.put<{message: string}>('http://localhost:3000/api/posts/' + id, post).subscribe((response)=>{
       console.log(response.message);
+      const updatedPost = [...this.posts];
+      const oldPostIndex = updatedPost.findIndex(p=> p.id === post.id);
+      updatedPost[oldPostIndex] = post;
+      this.posts = updatedPost;
+      this.postUpdate.next([...this.posts]);
       this.router.navigate(['postList']);
     });
   }
