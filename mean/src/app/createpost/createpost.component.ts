@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CommonService } from '../service/common.service';
 
@@ -9,10 +9,7 @@ import { CommonService } from '../service/common.service';
   styleUrls: ['./createpost.component.scss'],
 })
 export class CreatepostComponent implements OnInit {
-  //now we going to do reactive form, so we can create our form Dynamically, so first we need to create form group, this from group is top level of the from its group all the form
-
   formgp: FormGroup;
-
   post: any;
   private mode = 'create';
   private postId: any;
@@ -24,14 +21,15 @@ export class CreatepostComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //initialization of from group, this will create new object, this takes that object as an argument, we can assign the key values to take control like title, once assign key then create the form control() object, this form control has arguments, first argument is begining state of field, we assign null like empty value, this form only for creation if in a edit form we need to set the value for the form
-
     this.formgp = new FormGroup({
-      'title': new FormControl(null, {
+      title: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)],
       }),
-      'content': new FormControl(null, {
-        validators: [Validators.required]
+      content: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+      image: new FormControl(null, {
+        validators: [Validators.required],
       })
     });
 
@@ -47,9 +45,10 @@ export class CreatepostComponent implements OnInit {
             title: postData.title,
             content: postData.content,
           };
-          
-          // here we set the form value for the edit form
-          this.formgp.setValue({'title': this.post.title, 'content': this.post.content})
+          this.formgp.setValue({
+            title: this.post.title,
+            content: this.post.content,
+          });
         });
       } else {
         this.mode = 'create';
@@ -58,25 +57,15 @@ export class CreatepostComponent implements OnInit {
     });
   }
 
-  // onSavePost(form: NgForm) {
-  //   if (form.invalid) {
-  //     return;
-  //   }
-  //   this.isLoading = true;
-  //   if (this.mode == 'create') {
-  //     this.commonService.addPost(form.value.title, form.value.content);
-  //     form.resetForm();
-  //   } else if (this.mode == 'edit') {
-  //     this.commonService.updatePost(
-  //       this.postId,
-  //       form.value.title,
-  //       form.value.content
-  //     );
-  //     form.resetForm();
-  //   }
-  // }
+  //getting the image file on DOM event but the 'event.target' not getting so we tell to typescript with the help of event paranthises, that 'event.target' is html input element, this is called type convertion, here i am patching the file value to formGroup control, then we check the file update validation
 
-  //here we change the ng form to our form group
+  onImagePick(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.formgp.patchValue({image: file});
+    this.formgp.get('image').updateValueAndValidity();
+    // console.log(file);
+    // console.log(this.formgp);
+  }
 
   onSavePost() {
     if (this.formgp.invalid) {
@@ -84,7 +73,10 @@ export class CreatepostComponent implements OnInit {
     }
     this.isLoading = true;
     if (this.mode == 'create') {
-      this.commonService.addPost(this.formgp.value.title, this.formgp.value.content);
+      this.commonService.addPost(
+        this.formgp.value.title,
+        this.formgp.value.content
+      );
     } else if (this.mode == 'edit') {
       this.commonService.updatePost(
         this.postId,
