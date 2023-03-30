@@ -14,3 +14,13 @@ mat-spinner{
 input[type="file"]{
     visibility: hidden;
 }
+
+.image_preview{
+    height: 5rem;
+    margin: .5rem;
+}
+
+.image_preview img{
+    height: 100%;
+    border-radius: .5rem;
+}

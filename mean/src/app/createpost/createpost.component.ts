@@ -15,6 +15,8 @@ export class CreatepostComponent implements OnInit {
   private postId: any;
   isLoading = false;
 
+  imagePreview: string;
+
   constructor(
     public commonService: CommonService,
     public activeroute: ActivatedRoute
@@ -65,6 +67,14 @@ export class CreatepostComponent implements OnInit {
     this.formgp.get('image').updateValueAndValidity();
     // console.log(file);
     // console.log(this.formgp);
+
+    //need to convert the image object to image URL
+
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      this.imagePreview = reader.result as string;
+    }
+    reader.readAsDataURL(file);
   }
 
   onSavePost() {
