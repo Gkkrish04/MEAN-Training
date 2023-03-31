@@ -1,10 +1,12 @@
 import { AbstractControl } from "@angular/forms";
-import { Observer } from "rxjs";
-import { Observable } from "rxjs";
+import { Observer, Observable, of } from "rxjs";
 
 //we have to validate asynchronously
 
 export const mimeType = (control: AbstractControl): Promise<{[key: string]:any}> | Observable<{[key: string]:any}> => {
+    if(typeof(control.value)=== 'string'){
+        return of(null);
+    }
     const file = control.value as File;
     const fileReader = new FileReader();
     //creating file reader observable for monetring the file

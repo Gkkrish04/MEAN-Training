@@ -48,11 +48,12 @@ export class CreatepostComponent implements OnInit {
             id: postData._id,
             title: postData.title,
             content: postData.content,
-            imagePath: null,
+            imagePath: postData.imagePath,
           };
           this.formgp.setValue({
             title: this.post.title,
             content: this.post.content,
+            image: this.post.imagePath
           });
         });
       } else {
@@ -91,7 +92,8 @@ export class CreatepostComponent implements OnInit {
       this.commonService.updatePost(
         this.postId,
         this.formgp.value.title,
-        this.formgp.value.content
+        this.formgp.value.content,
+        this.formgp.value.image
       );
     }
     this.formgp.reset();
