@@ -3,6 +3,9 @@
     <mat-accordion *ngIf="posts.length > 0">
         <mat-expansion-panel *ngFor="let item of posts">
             <mat-expansion-panel-header>{{item.title}}</mat-expansion-panel-header>
+            <div class="post_img">
+                <img [src]="item.imagePath" [alt]="item.title">
+            </div>
             <p>{{item.content}}</p>
             <mat-action-row>
                 <a mat-raised-button color="primary" [routerLink]="['/edit', item.id]">EDIT</a>

@@ -48,6 +48,7 @@ export class CreatepostComponent implements OnInit {
             id: postData._id,
             title: postData.title,
             content: postData.content,
+            imagePath: null,
           };
           this.formgp.setValue({
             title: this.post.title,
@@ -61,16 +62,12 @@ export class CreatepostComponent implements OnInit {
     });
   }
 
-  //getting the image file on DOM event but the 'event.target' not getting so we tell to typescript with the help of event paranthises, that 'event.target' is html input element, this is called type convertion, here i am patching the file value to formGroup control, then we check the file update validation
-
   onImagePick(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
     this.formgp.patchValue({image: file});
     this.formgp.get('image').updateValueAndValidity();
     // console.log(file);
     // console.log(this.formgp);
-
-    //need to convert the image object to image URL
 
     const reader = new FileReader();
     reader.onload = ()=>{
@@ -87,7 +84,8 @@ export class CreatepostComponent implements OnInit {
     if (this.mode == 'create') {
       this.commonService.addPost(
         this.formgp.value.title,
-        this.formgp.value.content
+        this.formgp.value.content,
+        this.formgp.value.image
       );
     } else if (this.mode == 'edit') {
       this.commonService.updatePost(
