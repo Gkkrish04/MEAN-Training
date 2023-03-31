@@ -13,7 +13,7 @@
 
         <!-- image preview -->
 
-        <div class="image_preview" *ngIf="imagePreview != '' && imagePreview">
+        <div class="image_preview" *ngIf="imagePreview != '' && imagePreview && formgp.get('image').valid">
             <img [src]="imagePreview" [alt]="formgp.value.title">
         </div>
 

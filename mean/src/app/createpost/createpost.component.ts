@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CommonService } from '../service/common.service';
+import { mimeType } from '../model/mime-type.validator';
 
 @Component({
   selector: 'app-createpost',
@@ -32,6 +33,7 @@ export class CreatepostComponent implements OnInit {
       }),
       image: new FormControl(null, {
         validators: [Validators.required],
+        asyncValidators: [mimeType],
       })
     });
 
