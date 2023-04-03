@@ -7,48 +7,54 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-postlist',
   templateUrl: './postlist.component.html',
-  styleUrls: ['./postlist.component.scss']
+  styleUrls: ['./postlist.component.scss'],
 })
 export class PostlistComponent implements OnInit, OnDestroy {
-
   isLoading = false;
 
-  totalPost = 10;
+  totalPost = 0;
   postPerPage = 2;
   currPage = 1;
   pageSizeOpt = [1, 2, 5, 10];
-  
-  posts:Post[] = [];
+
+  posts: Post[] = [];
   private postsSub: Subscription | undefined;
 
-  constructor(public commonService:CommonService ) { }
+  constructor(public commonService: CommonService) {}
 
   ngOnInit(): void {
     this.getPost();
   }
 
-  onChangePage(pageData: PageEvent){
-    console.log(pageData);
+  getPost() {
+    this.isLoading = true;
+    this.commonService.getPost(this.postPerPage, this.currPage);
+    this.postsSub = this.commonService
+      .getPostUpdateListner()
+      .subscribe((postData:{posts:Post[], postCount: number}) => {
+        this.totalPost = postData.postCount;
+        this.posts = postData.posts;
+        this.isLoading = false;
+      });
+  }
+
+  onChangePage(pageData: PageEvent) {
+    // console.log(pageData);
+    // this.isLoading = true;
     this.currPage = pageData.pageIndex + 1;
     this.postPerPage = pageData.pageSize;
     this.commonService.getPost(this.postPerPage, this.currPage);
   }
 
-  getPost(){
-    this.isLoading = true;
-    this.commonService.getPost(this.postPerPage, this.currPage);
-    this.postsSub = this.commonService.getPostUpdateListner().subscribe((posts)=>{
-      this.posts = posts;
-      this.isLoading = false;
-    })
+  onDelete(postId: any) {
+    // this.isLoading = true;
+    this.commonService.deletePost(postId).subscribe((response) => {
+      console.log(response.message);
+      this.commonService.getPost(this.postPerPage, this.currPage);
+    });
   }
 
-  onDelete(postId:any){
-    this.commonService.deletePost(postId);
-  }
-
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.postsSub?.unsubscribe();
   }
-
 }

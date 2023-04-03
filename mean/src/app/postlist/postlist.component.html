@@ -13,6 +13,6 @@
             </mat-action-row>
         </mat-expansion-panel>
     </mat-accordion>
-    <mat-paginator [length]="totalPost" [pageSize]="postPerPage" [pageSizeOptions]="pageSizeOpt" (page)="onChangePage($event)"></mat-paginator>
+    <mat-paginator *ngIf="posts.length > 0" [length]="totalPost" [pageSize]="postPerPage" [pageSizeOptions]="pageSizeOpt" (page)="onChangePage($event)"></mat-paginator>
     <div *ngIf="posts.length <= 0">No Data fund</div>
 </div>
