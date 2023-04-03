@@ -7,6 +7,7 @@
   .menu{
     display: flex;
     gap:1rem;
+    width: 90%;
     cursor: pointer;
   
     &_item{
@@ -16,6 +17,10 @@
       &:hover{
         color:#cd14ed;
         background-color: #cfe8f5;
+      }
+
+      &:last-child{
+        justify-content: flex-end;
       }
     }
   }
