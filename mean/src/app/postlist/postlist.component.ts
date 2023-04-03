@@ -15,6 +15,7 @@ export class PostlistComponent implements OnInit, OnDestroy {
 
   totalPost = 10;
   postPerPage = 2;
+  currPage = 1;
   pageSizeOpt = [1, 2, 5, 10];
   
   posts:Post[] = [];
@@ -28,11 +29,14 @@ export class PostlistComponent implements OnInit, OnDestroy {
 
   onChangePage(pageData: PageEvent){
     console.log(pageData);
+    this.currPage = pageData.pageIndex + 1;
+    this.postPerPage = pageData.pageSize;
+    this.commonService.getPost(this.postPerPage, this.currPage);
   }
 
   getPost(){
     this.isLoading = true;
-    this.commonService.getPost();
+    this.commonService.getPost(this.postPerPage, this.currPage);
     this.postsSub = this.commonService.getPostUpdateListner().subscribe((posts)=>{
       this.posts = posts;
       this.isLoading = false;

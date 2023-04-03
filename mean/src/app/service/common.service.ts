@@ -17,8 +17,9 @@ export class CommonService {
 
   constructor(private http: HttpClient, public router: Router) {}
 
-  getPost() {
-    this.http.get<{message: string, data:any}>('http://localhost:3000/api/posts')
+  getPost(postPerPage:number, currPage: number) {
+    const queryParam = `?pagesize=${postPerPage}&page=${currPage}`;
+    this.http.get<{message: string, data:any}>('http://localhost:3000/api/posts' + queryParam)
     .pipe(map((response) => {
       return response.data.map((dataVal:any) =>{
         const post = {
