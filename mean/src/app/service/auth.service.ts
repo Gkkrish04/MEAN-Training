@@ -9,14 +9,17 @@ import { Subject } from 'rxjs';
 })
 export class AuthService {
   baseUrl: any = 'http://localhost:3000/api/';
-
+  isAuthendicated = false;
    private token: string;
    private authStatus = new Subject<boolean>()
-
   constructor(private http: HttpClient, public router: Router) {}
 
   getToken(){
     return this.token;
+  }
+
+  getIsAuth(){
+    return this.isAuthendicated;
   }
 
   getAuthStatusListener(){
@@ -36,9 +39,13 @@ export class AuthService {
     const loginData = {email:email, password:password};
     this.http.post<{token: string}>(this.baseUrl + 'user/login', loginData).subscribe(response => {
       this.token = response.token;
-      localStorage.setItem('token', this.token);
-      this.authStatus.next(true);
-      this.router.navigate(['postList']);
+      if(this.token){
+        localStorage.setItem('token', this.token);
+        this.isAuthendicated = true;
+        this.authStatus.next(true);
+        this.router.navigate(['postList']);
+      }
+
     })
   }
 }
