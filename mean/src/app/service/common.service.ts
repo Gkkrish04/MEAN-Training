@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 export class CommonService {
   baseUrl: any = 'http://localhost:3000/api/';
 
+  //here we going to create interceptor for handlong the token
+
   private posts: Post[] = [];
   private postUpdate = new Subject<{ posts: Post[]; postCount: any }>();
 
@@ -63,14 +65,6 @@ export class CommonService {
       )
       .subscribe((response) => {
         console.log(response.message);
-        // const post: Post = {
-        //   id: response.post.id,
-        //   title: title,
-        //   content: content,
-        //   imagePath: response.post.imagePath,
-        // };
-        // this.posts.push(post);
-        // this.postUpdate.next([...this.posts]);
         this.router.navigate(['postList']);
       });
   }
@@ -108,17 +102,6 @@ export class CommonService {
       )
       .subscribe((response) => {
         console.log(response.message);
-        // const updatedPost = [...this.posts];
-        // const oldPostIndex = updatedPost.findIndex((p) => p.id === id);
-        // const post: Post = {
-        //   id: id,
-        //   title: title,
-        //   content: content,
-        //   imagePath: '',
-        // };
-        // updatedPost[oldPostIndex] = post;
-        // this.posts = updatedPost;
-        // this.postUpdate.next([...this.posts]);
         this.router.navigate(['postList']);
       });
   }
@@ -127,11 +110,5 @@ export class CommonService {
     return this.http.delete<{ message: string }>(
       'http://localhost:3000/api/posts/' + postId
     );
-    // .subscribe((response) => {
-    //   console.log(response.message);
-    //   const updatePost = this.posts.filter((post) => post.id !== postId);
-    //   this.postUpdate.next([...updatePost]);
-    //   this.router.navigate(['postList']);
-    // });
   }
 }
