@@ -4,7 +4,7 @@
       <li *ngIf="userAuthendicate" class="menu_item" routerLink="/createPost">Create Post</li>
       <li *ngIf="!userAuthendicate" class="menu_item" routerLink="/login">Login</li>
       <li *ngIf="!userAuthendicate" class="menu_item" routerLink="/signup">SignUp</li>
-      <li *ngIf="userAuthendicate" class="menu_item">Logout</li>
+      <li *ngIf="userAuthendicate" class="menu_item"><button (click)="onLogout()">Logout</button></li>
     </ul>
   </div>
   

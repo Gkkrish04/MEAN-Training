@@ -48,4 +48,12 @@ export class AuthService {
 
     })
   }
+
+  logoutUser(){
+    this.token = null;
+    this.isAuthendicated = false,
+    localStorage.setItem('token', null);
+    this.authStatus.next(false);
+    this.router.navigate(['postList']);
+  }
 }
