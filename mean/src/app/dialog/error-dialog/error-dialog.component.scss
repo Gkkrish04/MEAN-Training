@@ -1,0 +1,19 @@
+.container{
+    display: flex;
+    flex-direction: column;
+
+    &_close{
+        display: flex;
+        width: 100%;
+        padding: .5rem;
+        justify-content: flex-end;
+    }
+
+    &_box{
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem 1rem;
+        font-size: 1.6rem;
+        font-weight: 600;
+    }
+}

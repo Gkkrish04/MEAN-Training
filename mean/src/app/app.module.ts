@@ -14,10 +14,13 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDialogModule} from '@angular/material/dialog';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatIconModule} from '@angular/material/icon';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './service/auth.interceptor';
+import { ErrorDialogComponent } from './dialog/error-dialog/error-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,8 @@ import { AuthInterceptor } from './service/auth.interceptor';
     PostlistComponent,
     HeaderComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +41,8 @@ import { AuthInterceptor } from './service/auth.interceptor';
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
     MatExpansionModule,
     HttpClientModule,
     MatProgressSpinnerModule,

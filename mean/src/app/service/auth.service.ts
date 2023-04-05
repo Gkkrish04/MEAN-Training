@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthData } from '../model/auth.model';
 import { Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from '../dialog/error-dialog/error-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +15,7 @@ export class AuthService {
    private token: string;
    private tokenTimer: any;
    private authStatus = new Subject<boolean>()
-  constructor(private http: HttpClient, public router: Router) {}
+  constructor(private http: HttpClient, public router: Router, public dialog: MatDialog,) {}
 
   getToken(){
     return this.token;
@@ -44,7 +46,8 @@ export class AuthService {
         const expiresDuration = response.expiresIn;
         this.tokenTimer = setTimeout(() => {
           this.logoutUser();
-        }, expiresDuration);
+          this.dialogBox('Session Expired!');
+        }, expiresDuration * 1000);
         localStorage.setItem('token', this.token);
         this.isAuthendicated = true;
         this.authStatus.next(true);
@@ -61,5 +64,15 @@ export class AuthService {
     this.authStatus.next(false);
     clearTimeout(this.tokenTimer);
     this.router.navigate(['postList']);
+  }
+
+  dialogBox(msgStr){
+    this.dialog.open(ErrorDialogComponent, {
+      panelClass: ["animate__animated", "animate__slideInUp"],
+      width: "20rem",
+      disableClose: false,
+      position: { right: "22%" },
+      data:msgStr,
+    })
   }
 }
