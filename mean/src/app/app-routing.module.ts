@@ -5,10 +5,12 @@ import { PostlistComponent } from './postlist/postlist.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthGuard } from './service/auth.guard';
+import { PracticeComponent } from './practice/practice.component';
 
 const routes: Routes = [
   {path:"", component:PostlistComponent},
   {path:"postList", component:PostlistComponent},
+  {path:"practice", component:PracticeComponent},
   {path:"createPost", component:CreatepostComponent, canActivate: [AuthGuard]},
   {path:"edit/:postId", component:CreatepostComponent, canActivate: [AuthGuard]},
   {path:"login", component: LoginComponent},

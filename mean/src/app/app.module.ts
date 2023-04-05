@@ -21,6 +21,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './service/auth.interceptor';
 import { ErrorDialogComponent } from './dialog/error-dialog/error-dialog.component';
+import { PracticeComponent } from './practice/practice.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ErrorDialogComponent } from './dialog/error-dialog/error-dialog.compone
     HeaderComponent,
     SignupComponent,
     LoginComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    PracticeComponent
   ],
   imports: [
     BrowserModule,
