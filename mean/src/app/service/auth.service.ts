@@ -75,4 +75,8 @@ export class AuthService {
       data:msgStr,
     })
   }
+
+  getTestPost(){
+    return this.http.get('https://jsonplaceholder.typicode.com/users');
+  }
 }

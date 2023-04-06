@@ -24,6 +24,8 @@ export class PracticeComponent implements OnInit {
 
   arr3 = ['money', 'currency', 'doller', 'Rupee', 'yen'];
 
+  arr4 = [2, 5, 2, 3, 6, 7];
+
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {}
@@ -57,6 +59,10 @@ export class PracticeComponent implements OnInit {
     return finArr;
   }
 
+  removeDubSingle(){
+    return [...new Set(this.arr4)];
+  }
+
   printSerise(len){
     let val = len;
     for(let i = 1; i <= val; i++){
@@ -72,6 +78,11 @@ export class PracticeComponent implements OnInit {
     let finArr = this.removeDuplicate();
     console.log('Remove duplicate on array', JSON.stringify(finArr));
     // this.arrayBasics();
+    console.log(this.removeDubSingle());
     this.printSerise(5);
+
+    this.authService.getTestPost().subscribe(res =>{
+      console.log(res);
+    })
   }
 }
