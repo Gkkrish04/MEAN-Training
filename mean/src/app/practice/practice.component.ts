@@ -28,13 +28,6 @@ export class PracticeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  arrFilter() {
-    const filterArr = this.arr1.filter((el) => {
-      return el.id == 3;
-    });
-    return filterArr;
-  }
-
   arrayBasics() {
     console.log(this.arr3.join(' '));
     console.log(this.arr3.pop());
@@ -47,6 +40,13 @@ export class PracticeComponent implements OnInit {
   joinArr() {
     let joinArrVal = this.arr1.concat(this.arr2);
     return joinArrVal;
+  }
+
+  arrFilter() {
+    const filterArr = this.arr1.filter((el) => {
+      return el.id == 3;
+    });
+    return filterArr;
   }
 
   removeDuplicate() {
