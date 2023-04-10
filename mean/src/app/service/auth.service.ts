@@ -44,26 +44,72 @@ export class AuthService {
       this.token = response.token;
       if(this.token){
         const expiresDuration = response.expiresIn;
-        this.tokenTimer = setTimeout(() => {
-          this.logoutUser();
-          this.dialogBox('Session Expired!');
-        }, expiresDuration * 1000);
-        localStorage.setItem('token', this.token);
+        this.setAuthTimer(expiresDuration);
+        // localStorage.setItem('token', this.token);
         this.isAuthendicated = true;
         this.authStatus.next(true);
+        const now = new Date();
+        const expireDate = new Date(now.getTime() + expiresDuration * 1000);
+        this.saveAuthData(this.token,expireDate)
         this.router.navigate(['postList']);
       }
 
     })
   }
 
+  setAuthTimer(duration:number){
+    this.tokenTimer = setTimeout(()=> {
+      this.logoutUser();
+      this.dialogBox('Session Expired!');
+    }, duration * 1000);
+  }
+
+  autoAuthUser(){
+    const authInfo = this.getAuthData();
+    if(authInfo == null){
+      return;
+    }
+    const now = new Date();
+    const expireIn = authInfo.expireData.getTime() - now.getTime();
+    if(expireIn > 0){
+      this.token = authInfo.token;
+      this.isAuthendicated = true;
+      this.setAuthTimer(expireIn / 1000);
+      this.authStatus.next(true);
+    }
+  }
+
+  saveAuthData(token:string, expireData: Date){
+    localStorage.setItem('token', token);
+    localStorage.setItem('expireData', expireData.toISOString());
+  }
+
+  clearAuthData(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('expireData');
+  }
+
   logoutUser(){
     this.token = null;
     this.isAuthendicated = false,
-    localStorage.setItem('token', null);
     this.authStatus.next(false);
     clearTimeout(this.tokenTimer);
+    this.clearAuthData();
     this.router.navigate(['postList']);
+  }
+
+  getAuthData(){
+    const token = localStorage.getItem('token');
+    const expireData = localStorage.getItem('expireData');
+
+    if(!token || !expireData){
+      return null;
+    }
+
+    return {
+      token:token,
+      expireData: new Date(expireData),
+    }
   }
 
   dialogBox(msgStr){
