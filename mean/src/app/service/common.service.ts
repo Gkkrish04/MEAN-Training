@@ -33,6 +33,7 @@ export class CommonService {
                 content: dataVal.content,
                 id: dataVal._id,
                 imagePath: dataVal.imagePath,
+                creator: dataVal.creator,
               };
               return post;
             }),
@@ -41,6 +42,7 @@ export class CommonService {
         })
       )
       .subscribe((transformPostData) => {
+        // console.log(transformPostData);
         this.posts = transformPostData.posts;
         this.postUpdate.next({
           posts: [...this.posts],
