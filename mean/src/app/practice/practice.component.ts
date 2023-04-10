@@ -51,6 +51,10 @@ export class PracticeComponent implements OnInit {
     return filterArr;
   }
 
+  removeDubSingle(){
+    return [...new Set(this.arr4)];
+  }
+
   removeDuplicate() {
     let joinArrVal = this.arr1.concat(this.arr2);
     let finArr = joinArrVal.filter((obj, index, self) => {
@@ -59,9 +63,7 @@ export class PracticeComponent implements OnInit {
     return finArr;
   }
 
-  removeDubSingle(){
-    return [...new Set(this.arr4)];
-  }
+
 
   printSerise(len){
     let val = len;
@@ -73,12 +75,12 @@ export class PracticeComponent implements OnInit {
   check() {
     let value = this.arrFilter();
     console.log('Array Filter', JSON.stringify(value));
+    console.log(this.removeDubSingle());
     let joinArr = this.joinArr();
     console.log('Join Array Two Array', JSON.stringify(joinArr));
     let finArr = this.removeDuplicate();
     console.log('Remove duplicate on array', JSON.stringify(finArr));
     // this.arrayBasics();
-    console.log(this.removeDubSingle());
     this.printSerise(5);
 
     this.authService.getTestPost().subscribe(res =>{
