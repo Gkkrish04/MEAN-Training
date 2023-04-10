@@ -7,5 +7,7 @@
       <li *ngIf="!userAuthendicate" class="menu_item" routerLink="/signup">SignUp</li>
       <li *ngIf="userAuthendicate" class="menu_item"><button (click)="onLogout()">Logout</button></li>
     </ul>
+
+    <div class="userName">{{userName}}</div>
   </div>
   

@@ -2,12 +2,20 @@
     display: flex;
     width: 100%;
     padding: .5rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .userName{
+    font-size: 1.4rem;
+    color:#6b6a6a;
+    font-weight: 700;
+    margin-right: 3rem;
   }
   
   .menu{
     display: flex;
     gap:1rem;
-    width: 90%;
     cursor: pointer;
   
     &_item{
