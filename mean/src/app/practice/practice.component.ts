@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../service/auth.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-practice',
@@ -26,9 +27,23 @@ export class PracticeComponent implements OnInit {
 
   arr4 = [2, 5, 2, 3, 6, 7];
 
+  displayedColumns: string[] = ['id', 'name', 'email', 'website'];
+  dataSource:any;
+
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.getTestPost().subscribe(res =>{
+      console.log(res);
+      let data:any = res;
+      this.dataSource =new MatTableDataSource(data);
+    })
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   arrayBasics() {
     console.log(this.arr3.join(' '));
@@ -82,9 +97,5 @@ export class PracticeComponent implements OnInit {
     console.log('Remove duplicate on array', JSON.stringify(finArr));
     // this.arrayBasics();
     this.printSerise(5);
-
-    this.authService.getTestPost().subscribe(res =>{
-      console.log(res);
-    })
   }
 }

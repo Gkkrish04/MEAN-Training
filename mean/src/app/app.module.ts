@@ -22,6 +22,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './service/auth.interceptor';
 import { ErrorDialogComponent } from './dialog/error-dialog/error-dialog.component';
 import { PracticeComponent } from './practice/practice.component';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { PracticeComponent } from './practice/practice.component';
     HttpClientModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
+    MatTableModule,
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
