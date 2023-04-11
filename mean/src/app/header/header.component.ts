@@ -19,7 +19,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authListenerSub = this.authService.getAuthStatusListener().subscribe(isAuthendicate => {
       this.userAuthendicate = isAuthendicate;
     });
-    this.userName = localStorage.getItem('username');
+  }
+
+  ngDoCheck(){
+    if(this.userAuthendicate){
+      this.userName = localStorage.getItem('username');
+    }else{
+      this.userName = '';
+    }
   }
 
   onLogout(){
