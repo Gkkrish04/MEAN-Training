@@ -20,6 +20,7 @@ export class PostlistComponent implements OnInit, OnDestroy {
 
   posts: Post[] = [];
   userAuthendicate = false;
+  userId: string;
   private postsSub: Subscription | undefined;
   private authListenerStatusSub: Subscription;
 
@@ -32,6 +33,7 @@ export class PostlistComponent implements OnInit, OnDestroy {
   getPost() {
     this.isLoading = true;
     this.commonService.getPost(this.postPerPage, this.currPage);
+    this.userId = this.authService.getUserId();
     this.postsSub = this.commonService
       .getPostUpdateListner()
       .subscribe((postData:{posts:Post[], postCount: number}) => {
@@ -44,6 +46,7 @@ export class PostlistComponent implements OnInit, OnDestroy {
 
      this.authListenerStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthendication => {
       this.userAuthendicate = isAuthendication;
+      this.userId = this.authService.getUserId();
      });
   }
 
