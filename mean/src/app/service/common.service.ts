@@ -77,6 +77,7 @@ export class CommonService {
       title: string;
       content: string;
       imagePath: string;
+      creator: string;
     }>(this.baseUrl + 'posts/' + id);
   }
 
@@ -95,6 +96,7 @@ export class CommonService {
         title: title,
         content: content,
         imagePath: image,
+        creator: null
       };
     }
     this.http
