@@ -2,7 +2,7 @@
 <div *ngIf="!isLoading" class="container">
     <mat-accordion *ngIf="posts.length > 0">
         <mat-expansion-panel *ngFor="let item of posts">
-            <mat-expansion-panel-header>{{item.title}}</mat-expansion-panel-header>
+            <mat-expansion-panel-header>{{item.title | textUp}}</mat-expansion-panel-header>
             <div class="post_img">
                 <img [src]="item.imagePath" [alt]="item.title">
             </div>

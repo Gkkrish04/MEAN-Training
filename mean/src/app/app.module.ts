@@ -23,6 +23,7 @@ import { AuthInterceptor } from './service/auth.interceptor';
 import { ErrorDialogComponent } from './dialog/error-dialog/error-dialog.component';
 import { PracticeComponent } from './practice/practice.component';
 import {MatTableModule} from '@angular/material/table';
+import { TextUpPipe } from './text-up.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {MatTableModule} from '@angular/material/table';
     SignupComponent,
     LoginComponent,
     ErrorDialogComponent,
-    PracticeComponent
+    PracticeComponent,
+    TextUpPipe
   ],
   imports: [
     BrowserModule,
