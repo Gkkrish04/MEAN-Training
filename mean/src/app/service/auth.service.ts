@@ -65,6 +65,8 @@ export class AuthService {
         this.router.navigate(['postList']);
       }
 
+    }, error =>{
+      console.log('Not Login');
     })
   }
 
