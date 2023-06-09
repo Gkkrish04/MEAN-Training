@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from '../dialog/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-practice',
@@ -37,7 +39,7 @@ export class PracticeComponent implements OnInit {
   str1 = 'computer';
   str2 = 'car';
   result = [];
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.authService.getTestPost().subscribe(res =>{
@@ -57,6 +59,18 @@ export class PracticeComponent implements OnInit {
       })
     })
     console.log(data1.join().replace(/\,/g,' '));
+  }
+
+  msgData(){
+    let dataVal = 'Testing Data';
+    this.dialog.open(ErrorDialogComponent,{
+      panelClass: ['animate__animated', 'animate__slideInUp'],
+      width: '350px',
+      height: 'auto',
+      disableClose: false,
+      position: { right: '50%', top: '10rem' },
+      data:dataVal,
+    })
   }
 
   findMissingAllNumber(arr){

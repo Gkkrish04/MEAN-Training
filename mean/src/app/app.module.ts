@@ -24,6 +24,7 @@ import { ErrorDialogComponent } from './dialog/error-dialog/error-dialog.compone
 import { PracticeComponent } from './practice/practice.component';
 import {MatTableModule} from '@angular/material/table';
 import { TextUpPipe } from './text-up.pipe';
+import { ErrorInterceptor } from './service/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,10 @@ import { TextUpPipe } from './text-up.pipe';
     MatPaginatorModule,
     MatTableModule,
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
