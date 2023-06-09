@@ -41,9 +41,12 @@ export class AuthService {
     this.http
       .post(this.baseUrl + 'user/signup', authData)
       .subscribe((response) => {
-        console.log(response);
-        this.router.navigate(['login']);
-      });
+          console.log(response);
+          this.router.navigate(['login']);
+        }, error =>{
+            console.log("Not Create");
+            this.authStatus.next(false);
+          });
   }
 
   loginUser(email: string, password: string) {
