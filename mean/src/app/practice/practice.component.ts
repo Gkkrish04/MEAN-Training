@@ -23,13 +23,20 @@ export class PracticeComponent implements OnInit {
     { id: 5, name: 'name5' },
   ];
 
+ 
+
   arr3 = ['money', 'currency', 'doller', 'Rupee', 'yen'];
 
   arr4 = [2, 5, 2, 3, 6, 7];
 
+  arr5 = [1,2,4,5,7,8,10,13];
+
   displayedColumns: string[] = ['id', 'name', 'email', 'website'];
   dataSource:any;
 
+  str1 = 'computer';
+  str2 = 'car';
+  result = [];
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -38,6 +45,32 @@ export class PracticeComponent implements OnInit {
       let data:any = res;
       this.dataSource =new MatTableDataSource(data);
     })
+
+    let data1 = this.str1.split('');
+    let data2 = this.str2.split('');
+    data2.map(item=>{
+      console.log(item);
+      [...data1].map((item1, ind)=>{
+        if(item == item1){
+          data1.splice(ind, 1);
+        }
+      })
+    })
+    console.log(data1.join().replace(/\,/g,' '));
+  }
+
+  findMissingAllNumber(arr){
+    let minVal = Math.min(...arr);
+    let maxVal = Math.max(...arr);
+    let missing = [];
+
+    for(let i = minVal; i<= maxVal; i++){
+      if(!arr.includes(i)){
+        missing.push(i);
+      }
+    }
+
+    return missing;
   }
 
   applyFilter(event: Event) {
@@ -97,5 +130,10 @@ export class PracticeComponent implements OnInit {
     console.log('Remove duplicate on array', JSON.stringify(finArr));
     // this.arrayBasics();
     this.printSerise(5);
+    console.log(this.findMissingAllNumber(this.arr5));
+    
   }
+
+
+  
 }
