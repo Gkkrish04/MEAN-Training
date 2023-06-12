@@ -13,20 +13,24 @@ import { ErrorDialogComponent } from '../dialog/error-dialog/error-dialog.compon
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
+  errMsg = 'Unknown Error...!';
   constructor(public dialog: MatDialog) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse)=>{
         console.log(error.error.message);
-        this.dialog.open(ErrorDialogComponent, {
-          panelClass: ['animate__animated', 'animate__slideInUp'],
-          width: '350px',
-          height: 'auto',
-          disableClose: false,
-          position: { right: '50%', top: '10rem' },
-          data:error.error.message,
-        })
+        if(error.error.message){
+          this.errMsg = error.error.message;
+          this.dialog.open(ErrorDialogComponent, {
+            panelClass: ['animate__animated', 'animate__slideInUp'],
+            width: '350px',
+            height: 'auto',
+            disableClose: false,
+            position: { right: '45%', top: '10rem' },
+            data:this.errMsg,
+          })
+        }
         // alert(error.error.message);
         return throwError(error);
       })
