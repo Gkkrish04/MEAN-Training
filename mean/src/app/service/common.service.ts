@@ -4,12 +4,13 @@ import { Subject } from 'rxjs';
 import { Post } from '../model/post.model';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommonService {
-  baseUrl: any = 'http://localhost:3000/api/';
+  baseUrl: any = environment.apiUrl;
 
   //here we going to create interceptor for handlong the token
 
@@ -62,8 +63,7 @@ export class CommonService {
     postData.append('image', image, title);
     this.http
       .post<{ message: string; post: Post }>(
-        'http://localhost:3000/api/posts',
-        postData
+        this.baseUrl + 'posts', postData
       )
       .subscribe((response) => {
         console.log(response.message);
@@ -101,8 +101,7 @@ export class CommonService {
     }
     this.http
       .put<{ message: string }>(
-        'http://localhost:3000/api/posts/' + id,
-        postData
+        this.baseUrl + 'posts/' + id, postData
       )
       .subscribe((response) => {
         console.log(response.message);
@@ -112,7 +111,7 @@ export class CommonService {
 
   deletePost(postId: any) {
     return this.http.delete<{ message: string }>(
-      'http://localhost:3000/api/posts/' + postId
+      this.baseUrl + 'posts/' + postId
     );
   }
 }

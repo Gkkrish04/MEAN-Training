@@ -4,13 +4,14 @@ import { Router } from '@angular/router';
 import { AuthData } from '../model/auth.model';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { environment } from '../../environments/environment';
 import { ErrorDialogComponent } from '../dialog/error-dialog/error-dialog.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl: any = 'http://localhost:3000/api/';
+  baseUrl: any = environment.apiUrl;
   isAuthendicated = false;
    private token: string;
    private tokenTimer: any;
